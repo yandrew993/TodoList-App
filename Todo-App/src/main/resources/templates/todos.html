@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>To-Do List</title>
+</head>
+<body>
+    <h2>To-Do List</h2>
+    <form th:action="@{/todos/add}" method="post">
+        <label for="description">New To-Do:</label>
+        <input type="text" id="description" name="description" required>
+        <button type="submit">Add</button>
+    </form>
+    <ul>
+        <li th:each="todo : ${todos}">
+            <form th:action="@{/todos/update}" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${todo.id}">
+                <input type="checkbox" name="done" th:checked="${todo.done}" onchange="this.form.submit()">
+                <span th:text="${todo.description}"></span>
+            </form>
+            <form th:action="@{/todos/delete}" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${todo.id}">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+    </ul>
+    <a href="/logout">Logout</a>
+</body>
+</html>
